@@ -1,0 +1,24 @@
+{
+  "name": "divvyMap",
+  "version": "1.0.0",
+  "description": "Displays Divvy station info.",
+  "main": "api_server.js",
+  "dependencies": {
+    "mongoose": "^4.4.13",
+    "express": "^4.13.4",
+    "body-parser": "^1.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "Phill",
+  "license": "ISC",
+  "bugs": {},
+  "homepage": ""
+}

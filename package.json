@@ -1,0 +1,20 @@
+{
+  "name": "divvyMap",
+  "version": "1.0.0",
+  "description": "MEAN app that maps Divvy stations in Chicago and displays station availability information",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psmith1618/divvyMap.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/psmith1618/divvyMap/issues"
+  },
+  "homepage": "https://github.com/psmith1618/divvyMap#readme"
+}
