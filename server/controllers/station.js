@@ -12,20 +12,22 @@ Station = function () {
         request.get("http://www.divvybikes.com/stations/json/", function (err, res, body) {
             if (!err) {
                 var stationObject = JSON.parse(body);
-                console.log(stationObject);
-                res.json(stationObject);
-                stationObject.forEach(function(divvyStation){
+                // console.log(stationObject["stationBeanList"]);
+                // res.json(stationObject);
+                stationObject["stationBeanList"].forEach(function(divvyStation){
+                    console.log(divvyStation.stationName);
                     var station = new Station(
                         {
-                            stationId: station.id,
-                            stationName: station.stationName,
-                            totalDocks: station.totalDocks,
-                            availableDocks: station.availableDocks,
-                            latitude: station.latitude,
-                            longitude: station.longitude,
-                            availableDocks: station.availableDocks
+                            stationId: divvyStation.id,
+                            stationName: divvyStation.stationName,
+                            totalDocks: divvyStation.totalDocks,
+                            availableDocks: divvyStation.availableDocks,
+                            latitude: divvyStation.latitude,
+                            longitude: divvyStation.longitude,
+                            availableDocks: divvyStation.availableDocks
                         }
-                    )
+                    );
+                    console.log(station.stationName);
                     station.save(function(err) {
                         if(err)
                             console.log(err);
@@ -33,7 +35,7 @@ Station = function () {
                 });
             };
         });
-        res.json(stationObject);
+        // res.json(stationObject);
     };
 
     self.all = function (req, res, next) {
