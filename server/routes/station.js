@@ -16,15 +16,15 @@ router.use(function (req, res, next) {
 
 //..controllers/station.js 
 
-// Get all the bikes
-router.get('/',Station.all); 
+// Get all the stations
+router.get('/',Station.seedStations); 
 // Create a station
 router.post('/', Station.create);
 // Remove a station
 router.delete('/', Station.remove);
 // Get a station
 router.get('/:id', Station.findOne);
-// Updat a station
+// Update a station
 router.put('/:id', Station.update);
 
 

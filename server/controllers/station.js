@@ -1,9 +1,40 @@
 // Include Mongoose Model
 var StationModel = require('../models/station');
+var request = require('request');
 
 Station = function () {
 
     var self = this;
+
+    self.seedStations = function(req, res, next){
+        var stationObject;
+
+        request.get("http://www.divvybikes.com/stations/json/", function (err, res, body) {
+            if (!err) {
+                var stationObject = JSON.parse(body);
+                console.log(stationObject);
+                res.json(stationObject);
+                stationObject.forEach(function(divvyStation){
+                    var station = new Station(
+                        {
+                            stationId: station.id,
+                            stationName: station.stationName,
+                            totalDocks: station.totalDocks,
+                            availableDocks: station.availableDocks,
+                            latitude: station.latitude,
+                            longitude: station.longitude,
+                            availableDocks: station.availableDocks
+                        }
+                    )
+                    station.save(function(err) {
+                        if(err)
+                            console.log(err);
+                    });
+                });
+            };
+        });
+        res.json(stationObject);
+    };
 
     self.all = function (req, res, next) {
         StationModel.find(function (err, stations) {

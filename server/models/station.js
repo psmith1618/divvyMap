@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema  = mongoose.Schema;
 
 var StationSchema   = new Schema({
-    id: Number,
+    stationId: Number,
     stationName: String,
     totalDocks: Number,
     availableDocks: Number,
