@@ -1,16 +1,28 @@
 <html ng-app="divvyMapApp">
 <head>
-  <script src="/node_modules/angular/angular.js"></script>
-  <script src="/controllers/stations.js"></script>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+  	<script src='//maps.googleapis.com/maps/api/js?key=AIzaSyAzKK9dfzburzkwVzE6pQ3W0FiLYKCexRg'></script>
+  	<script src="/node_modules/angular/angular.js"></script>
+  	<script src='/node_modules/angular-google-maps/dist/angular-google-maps.js'></script>
+  	<script src='/node_modules/angular-simple-logger/dist/angular-simple-logger.js'></script>
+   	<script src='/node_modules/lodash/lodash.js'></script>
+  	<script src="/controllers/stations.js"></script>
+  	<style>
+  		.angular-google-map-container { height: 400px; }
+  	</style>
 </head>
 <body ng-controller="divvyMapController">
 
-  <ul>
+<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+  <!-- <ul>
     <li ng-repeat="station in stations">
       <span>{{station.stationName}}</span>
       <p>{{station.availableDocks}}</p>
+      <p>{{station.longitude}}</p>
+      <p>{{station.latitude}}</p>
     </li>
-  </ul>
+  </ul> -->
 
 </body>
 </html>
