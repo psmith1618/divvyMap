@@ -8,23 +8,33 @@ Station = function () {
 
     self.seedStations = function(req, res, next){
         var stationObject;
-        var station = new StationModel();
 
         request.get("http://www.divvybikes.com/stations/json/", function (err, res, body) {
             if (!err) {
                 var stationObject = JSON.parse(body);
+                // console.log(stationObject["stationBeanList"]);
                 stationObject["stationBeanList"].forEach(function(divvyStation){
-                    station.save(function(err) {
+                    var myStation = new StationModel();
+                    myStation.stationId = divvyStation.id;
+                    myStation.stationName = divvyStation.stationName;
+                    myStation.totalDocks = divvyStation.totalDocks;
+                    myStation.availableDocks = divvyStation.availableDocks;
+                    myStation.latitude = divvyStation.latitude;
+                    myStation.longitude = divvyStation.longitude;
+                    myStation.save(function(err,station){
                         if(err){
-                            console.log(err);
-                        }else{
-                            return res;
+                            res.send(err);
+                        }
+                        else{
+                            console.log(myStation);
+                            // res.json(station);
                         }
                     });
                 });
             };
         });
-        res.json(stationObject);
+        // res.json(stationObject);
+        res.sendStatus(200);
     };
 
     self.all = function (req, res, next) {
@@ -57,26 +67,19 @@ Station = function () {
         request.get("http://www.divvybikes.com/stations/json/", function (err, res, body) {
             if (!err) {
                 var stationObject = JSON.parse(body);
-                console.log(stationObject["stationBeanList"][0]);
-                myStation.stationId = stationObject["stationBeanList"][0].id;
-                myStation.stationName = stationObject["stationBeanList"][0].stationName;
-                myStation.totalDocks = stationObject["stationBeanList"][0].totalDocks;
-                myStation.availableDocks = stationObject["stationBeanList"][0].availableDocks;
-                myStation.latitude = stationObject["stationBeanList"][0].latitude;
-                myStation.longitude = stationObject["stationBeanList"][0].longitude;
-                console.log(myStation);
-                myStation.save();
+                stationObject["stationBeanList"].forEach(function(divvyStation){
+                    myStation.stationId = divvyStation.id;
+                    myStation.stationName = divvyStation.stationName;
+                    myStation.totalDocks = divvyStation.totalDocks;
+                    myStation.availableDocks = divvyStation.availableDocks;
+                    myStation.latitude = divvyStation.latitude;
+                    myStation.longitude = divvyStation.longitude;
+                    console.log(myStation);
+                    myStation.save();
+                });
             };
         });
-        myStation.save(function (err, station) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                console.log(station.stationName);
-                res.json(station);
-            }
-        });
+        res.json(myStation);
     };
 
     self.remove = function (req, res, next) {
