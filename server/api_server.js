@@ -30,11 +30,11 @@ app.use(bodyParser.json());
 
 // Connect to our Database
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/divvy_map');
+mongoose.connect('mongodb://localhost:27017/divvy_map');
 
 
 app.get('/', function (req, res) {
-    res.send('Welcome')
+    res.send('Welcome!')
 });
 
 //ROUTES - all return json

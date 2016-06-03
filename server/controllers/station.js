@@ -8,34 +8,23 @@ Station = function () {
 
     self.seedStations = function(req, res, next){
         var stationObject;
+        var station = new StationModel();
 
         request.get("http://www.divvybikes.com/stations/json/", function (err, res, body) {
             if (!err) {
                 var stationObject = JSON.parse(body);
-                // console.log(stationObject["stationBeanList"]);
-                // res.json(stationObject);
                 stationObject["stationBeanList"].forEach(function(divvyStation){
-                    console.log(divvyStation.stationName);
-                    var station = new Station(
-                        {
-                            stationId: divvyStation.id,
-                            stationName: divvyStation.stationName,
-                            totalDocks: divvyStation.totalDocks,
-                            availableDocks: divvyStation.availableDocks,
-                            latitude: divvyStation.latitude,
-                            longitude: divvyStation.longitude,
-                            availableDocks: divvyStation.availableDocks
-                        }
-                    );
-                    console.log(station.stationName);
                     station.save(function(err) {
-                        if(err)
+                        if(err){
                             console.log(err);
+                        }else{
+                            return res;
+                        }
                     });
                 });
             };
         });
-        // res.json(stationObject);
+        res.json(stationObject);
     };
 
     self.all = function (req, res, next) {
@@ -64,15 +53,28 @@ Station = function () {
 
     self.create = function (req, res, next) {
         var myStation = new StationModel();
-        var station = req.body.station;
-        myStation.brand = station.brand;
-        myStation.price = station.price;
+
+        request.get("http://www.divvybikes.com/stations/json/", function (err, res, body) {
+            if (!err) {
+                var stationObject = JSON.parse(body);
+                console.log(stationObject["stationBeanList"][0]);
+                myStation.stationId = stationObject["stationBeanList"][0].id;
+                myStation.stationName = stationObject["stationBeanList"][0].stationName;
+                myStation.totalDocks = stationObject["stationBeanList"][0].totalDocks;
+                myStation.availableDocks = stationObject["stationBeanList"][0].availableDocks;
+                myStation.latitude = stationObject["stationBeanList"][0].latitude;
+                myStation.longitude = stationObject["stationBeanList"][0].longitude;
+                console.log(myStation);
+                myStation.save();
+            };
+        });
         myStation.save(function (err, station) {
             if (err) {
                 res.send(err);
             }
             else {
-                res.json(station)
+                console.log(station.stationName);
+                res.json(station);
             }
         });
     };
