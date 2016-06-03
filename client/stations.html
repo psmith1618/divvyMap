@@ -1,0 +1,16 @@
+<html ng-app="divvyMapApp">
+<head>
+  <script src="/node_modules/angular/angular.js"></script>
+  <script src="/controllers/stations.js"></script>
+</head>
+<body ng-controller="divvyMapController">
+
+  <ul>
+    <li ng-repeat="station in stations">
+      <span>{{station.stationName}}</span>
+      <p>{{station.availableDocks}}</p>
+    </li>
+  </ul>
+
+</body>
+</html>
