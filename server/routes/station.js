@@ -16,8 +16,10 @@ router.use(function (req, res, next) {
 
 //..controllers/station.js 
 
-// Get all the stations
-router.get('/',Station.seedStations); 
+// Get all the stations objects from app's db
+router.get('/', Station.all)
+//Get new info from DivvyApi
+router.get('/retrieve',Station.seedStations); 
 // Create a station
 router.post('/', Station.create);
 // Remove a station
