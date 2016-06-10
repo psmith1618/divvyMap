@@ -9,7 +9,8 @@ var StationSchema   = new Schema({
     availableDocks: Number,
     latitude: Number,
     longitude: Number,
-    availableBikes: Number
+    availableBikes: Number,
+    coords: Object
 });
 
 //export the schema so it can be used elsewhere in the application

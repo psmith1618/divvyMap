@@ -19,8 +19,13 @@ Station = function () {
                     myStation.stationName = divvyStation.stationName;
                     myStation.totalDocks = divvyStation.totalDocks;
                     myStation.availableDocks = divvyStation.availableDocks;
+                    myStation.availableBikes = divvyStation.availableBikes;
                     myStation.latitude = divvyStation.latitude;
                     myStation.longitude = divvyStation.longitude;
+                    myStation.coords = {
+                        latitude: divvyStation.latitude,
+                        longitude: divvyStation.longitude
+                    };
                     myStation.save(function(err,station){
                         if(err){
                             res.send(err);
@@ -35,6 +40,36 @@ Station = function () {
         });
         // res.json(stationObject);
         res.sendStatus(200);
+    };
+
+    self.updateAll = function (req, res, next) {
+        var stationObject;
+        
+        request.get("http://www.divvybikes.com/stations/json/", function (err, res, body) {
+            if (!err) {
+                var stationObject = JSON.parse(body);
+                stationObject["stationBeanList"].forEach(function(divvyStation){
+                    console.log(divvyStation);
+                    StationModel.findOneAndUpdate({stationId: divvyStation.stationId}, {$set:{availableBikes:divvyStation.availableBikes,
+                        availableDocks: divvyStation.availableDocks
+                    }}, {multi: true}, function(err, doc) {
+                        if(err){
+                            res.send(err);
+                        }else{
+                            console.log('lol')
+                        }
+                    });
+                });
+            }
+            else{
+                console.log(err);
+                res.send(err);
+            }
+        });
+        // res.sendStatus(200);
+        StationModel.find(function (err, stations) {
+            res.json(stations)
+        });
     };
 
     self.all = function (req, res, next) {

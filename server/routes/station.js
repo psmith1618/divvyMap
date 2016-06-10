@@ -18,7 +18,7 @@ router.use(function (req, res, next) {
 
 // Get all the stations objects from app's db
 router.get('/', Station.all)
-//Get new info from DivvyApi
+//seed db from DivvyApi
 router.get('/retrieve',Station.seedStations); 
 // Create a station
 router.post('/', Station.create);
@@ -28,6 +28,9 @@ router.delete('/', Station.remove);
 router.get('/:id', Station.findOne);
 // Update a station
 router.put('/:id', Station.update);
+//Update all
+router.put('/', Station.updateAll);
+
 
 
 module.exports = router;
